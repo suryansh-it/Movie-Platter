@@ -18,7 +18,7 @@ export const MovieProvider = ({children}) =>{
 
     // will run anytime our favourites chanes , i.e. added or removed
     useEffect(()=>{
-        localStorage.setItem('favourites',, JSON.stringify(favourites))
+        localStorage.setItem('favourites', JSON.stringify(favourites))
     }, [favourites])
 
     const addtofav = (movie)=>{
