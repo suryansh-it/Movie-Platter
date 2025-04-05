@@ -34,10 +34,25 @@ function Home() {
     //     {id :1, title : "The Matrix", release_date : "1998"},
     // ]
 
-    const handleSearch = (e) => {
+    const handleSearch = async (e) => {
         e.preventDefault();
-        alert(searchQuery)
-        setSearchQuery("")
+        
+        if(!searchQuery.trim()) return  //removes white spaces :trim
+        if (loading) return
+
+        setLoading(true)
+        try{
+            const searchResults= await searchMovies(searchQuery)
+            setMovies(searchResults)
+            setError(null)
+        }catch(err){
+            console.log(err)
+            setError("Failed to search  movies ...")
+        }finally{
+            setLoading(false)
+        }
+
+       
     };
 
     return(
@@ -48,12 +63,18 @@ function Home() {
 
                 <button type="submit" className="search-button">Search</button>
             </form>
+
+            {error && <div className="error-message">{error}</div>}
+
+            {loading ? ( <div className="loading">Loading...</div>
+            ):(
             <div className="movies-grid"> 
             {/* tosearch movies according to query */}
                 {movies.map((movie) => movie.title.toLowerCase().startsWith(searchQuery) && (   
                     <MovieCard movie={movie} key= {movie.id}/> //display this for every singlr elemetn 
                 ))}
             </div>
+    )}
         </div>
     ) 
 }

@@ -6,6 +6,7 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    {/* browserRouter acts like a context */}
     <BrowserRouter>
     <App />
     </BrowserRouter>
